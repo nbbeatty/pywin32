@@ -339,7 +339,8 @@ Connection Methods: (non-standard)
 
 Connection Attributes
 
-- .errorhandler # (standard extension. See PEP.)
+- .errorhandler # (standard extension. See PEP.) (does not work on
+remote)
 
 - .messages[] # (standard extension. See PEP)
 
@@ -359,7 +360,8 @@ the class for future connections.
 
 - .dbms_version # string identifying the version of the db engine.
 
-- .variantConversions # a map of ado types to the functions used to import them.
+- .variantConversions # a map of ado types to the functions used to
+import them.(not available on remote)
 
 - .supportsTransactions # (bool) this driver is capable of commit()/rollback().
 
@@ -424,9 +426,10 @@ Cursor attributes (non-standard)
 - .paramstyle # can be altered by the user to change paramstyle processing.
     (default taken from connection.) (see below)
 
-- .rs # the internal ADO recordset
+- .rs # the internal ADO recordset (local) or raw unpickled data (remote)
 
 - .converters[] # a list of input-conversion functions, one per column.
+   (not available on remote)
 
 - .columnNames{} # a dictionary of: ((lower-cased) column name : (column number).
 
@@ -856,7 +859,8 @@ code. It will run 2to3 when it does this, if needed.
 
 "\--postgres" run the PostgreSQL tests.
 
-"\--time" do time format test
+"\--time" run all time tests. (If mx-DateTime is not installed it will
+be skipped.)
 
 "\--verbose=n" gives lots of information.
 
@@ -876,4 +880,6 @@ Convenient way to run the main and api tests using different Python versions.
 
 - setuptestframework.py:
 
-A subroutine for test setup.
+If run as a main program, initialize a not-really-temporary directory
+for the server to use for remote testing. (Otherwise, it is a subroutine
+for test setup.)

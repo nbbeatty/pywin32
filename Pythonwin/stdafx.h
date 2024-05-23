@@ -17,6 +17,11 @@
 
 #include <afxwin.h>  // MFC core and standard components
 
+#if (_MFC_VER < 0x0600)
+// See pythonpsheet.cpp for more details!
+#define _WIN32_IE 0x0300  // Screw up with header sizes and MFC!!
+#endif
+
 #include <afxext.h>    // MFC extensions
 #include <afxcmn.h>    // common controls.
 #include <afxrich.h>   // rich edit support.
@@ -27,7 +32,7 @@
 #include "limits.h"
 
 // allow memory leaks to give me the line number.
-// #define new DEBUG_NEW
+//#define new DEBUG_NEW
 
 /* dont really need to undef these anymore, but helpful to
 programmers who forget to use the new names. */

@@ -50,8 +50,7 @@ def RegisterPythonServer(filename, progids=None, verbose=0):
                 break
             ok_files = [
                 os.path.basename(pythoncom.__file__),
-                "pythoncomloader%d%d.dll"
-                % (sys.version_info.major, sys.version_info.minor),
+                "pythoncomloader%d%d.dll" % (sys.version_info[0], sys.version_info[1]),
             ]
             if os.path.basename(dll) not in ok_files:
                 why_not = (

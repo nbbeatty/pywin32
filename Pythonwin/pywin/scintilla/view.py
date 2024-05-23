@@ -11,12 +11,8 @@ import win32con
 import win32ui
 from pywin.mfc import afxres, docview
 
-from . import (
-    IDLEenvironment,  # IDLE emulation.
-    bindings,
-    control,
-    scintillacon,
-)
+from . import IDLEenvironment  # IDLE emulation.
+from . import bindings, control, scintillacon
 
 PRINTDLGORD = 1538
 IDC_PRINT_MAG_EDIT = 1010

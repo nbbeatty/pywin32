@@ -1,5 +1,11 @@
 import sys
 
+
+# Some cruft to deal with the Pythonwin GUI booting up from a non GUI app.
+def _MakeDebuggerGUI():
+    app.InitInstance()
+
+
 isInprocApp = -1
 
 

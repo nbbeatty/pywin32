@@ -5,7 +5,6 @@ import os
 import sys
 
 import win32api
-import win32com.server.policy
 import win32com.server.util
 import winerror
 from win32com.server.exception import COMException
@@ -36,9 +35,21 @@ def trace(*args):
 # now does ensure this.
 
 
-def _wrap(object, iid):
-    useDispatcher = win32com.server.policy.DispatcherWin32trace if debugging else None
-    return win32com.server.util.wrap(object, iid, useDispatcher=useDispatcher)
+def _wrap_nodebug(object, iid):
+    return win32com.server.util.wrap(object, iid)
+
+
+def _wrap_debug(object, iid):
+    import win32com.server.policy
+
+    dispatcher = win32com.server.policy.DispatcherWin32trace
+    return win32com.server.util.wrap(object, iid, useDispatcher=dispatcher)
+
+
+if debugging:
+    _wrap = _wrap_debug
+else:
+    _wrap = _wrap_nodebug
 
 
 def RaiseNotImpl(who=None):
@@ -56,6 +67,9 @@ def RaiseNotImpl(who=None):
 
     # and raise the exception for COM
     raise COMException(scode=winerror.E_NOTIMPL)
+
+
+import win32com.server.policy
 
 
 class Dispatcher(win32com.server.policy.DispatcherWin32trace):

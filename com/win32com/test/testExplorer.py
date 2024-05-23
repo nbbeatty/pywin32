@@ -60,16 +60,20 @@ def TestExplorerEvents():
 
 def TestObjectFromWindow():
     # Check we can use ObjectFromLresult to get the COM object from the
+    # HWND - see KB Q249232
+    # Locating the HWND is different than the KB says...
     hwnd = win32gui.FindWindow("IEFrame", None)
-    # Thanks https://stackoverflow.com/a/10154498/18450412 for the child stack on IE8+
-    for child_class in (
-        "Frame Tab",
+    for child_class in [
         "TabWindowClass",
         "Shell DocObject View",
         "Internet Explorer_Server",
-    ):
+    ]:
         hwnd = win32gui.FindWindowEx(hwnd, 0, child_class, None)
-    # Once you have an 'Internet Explorer_Server',
+        # ack - not working for markh on vista with IE8 (or maybe it is the
+        # lack of the 'accessibility' components mentioned in Q249232)
+        # either way - not working!
+        return
+    # But here is the point - once you have an 'Internet Explorer_Server',
     # you can send a message and use ObjectFromLresult to get it back.
     msg = win32gui.RegisterWindowMessage("WM_HTML_GETOBJECT")
     rc, result = win32gui.SendMessageTimeout(

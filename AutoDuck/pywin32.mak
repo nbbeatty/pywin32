@@ -46,6 +46,7 @@ WIN32_SOURCE = $(WIN32_SOURCE_DIR)/*.cpp \
 	  $(GENDIR)/win32process.d $(GENDIR)/win32gui.d \
 	  $(GENDIR)/win32inet.d $(GENDIR)/_winxptheme.d \
 	  $(GENDIR)/win32job.d \
+	  winxpgui.d
 
 WIN32COM_SOURCE = \
 	  $(WIN32COM_DIR)\src\*.cpp \

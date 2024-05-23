@@ -208,8 +208,8 @@ def GetWebServer(description=None):
 def LoadWebServer(path):
     try:
         server = GetObject(path)
-    except pythoncom.com_error as exc:
-        msg = exc.strerror
+    except pythoncom.com_error as details:
+        msg = details.strerror
         if exc.excepinfo and exc.excepinfo[2]:
             msg = exc.excepinfo[2]
         msg = f"WebServer {path}: {msg}"

@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-from __future__ import annotations
 
 """
 win32timezone:
@@ -232,6 +231,7 @@ Test offsets that occur right at the DST changeover
 datetime.datetime(2011, 11, 6, 1, 0, tzinfo=TimeZoneInfo('Pacific Standard Time'))
 
 """
+from __future__ import annotations
 
 import datetime
 import logging
@@ -240,7 +240,6 @@ import re
 import struct
 import winreg
 from itertools import count
-from typing import Dict
 
 import win32api
 
@@ -793,8 +792,8 @@ class TimeZoneInfo(datetime.tzinfo):
         return zones
 
 
-class _RegKeyDict(Dict[str, int]):
-    def __init__(self, key: winreg.HKEYType):
+class _RegKeyDict(dict):
+    def __init__(self, key):
         dict.__init__(self)
         self.key = key
         self.__load_values()
@@ -908,8 +907,7 @@ def resolveMUITimeZone(spec):
 
 
 # from jaraco.util.dictlib 5.3.1
-# TODO: Update to implementation in jaraco.collections
-class RangeMap(dict):  # type: ignore[type-arg] # Source code is untyped :/ TODO: Add generics!
+class RangeMap(dict):
     """
     A dictionary-like object that uses the keys as bounds for a range.
     Inclusion of the value for that range is determined by the
